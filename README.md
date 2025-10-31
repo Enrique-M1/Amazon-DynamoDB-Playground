@@ -32,3 +32,17 @@ I am trying to learn DynamoDB using AWS and Java in tandem. This is a work in pr
     https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
     
     
+# Running the Program
+
+1.) You must start the DynamoDB Local server before running the program.
+    
+    - Open a command prompt
+    - Navigate to the directory where you have the DynamoDB Local server
+    - Type "java -Djava.library.path=./DynamoDBLocal_lib -jar DynamoDBLocal.jar"
+    - Press enter
+    - You should see a message that says "Started DynamoDB Local, connect string is: http://localhost:8000"
+    
+    NOTE: If you get an error, make sure that you have the correct path to the DynamoDBLocal.jar file.
+    NOTE: You may have 8000 already in use. If so, change the port number in the command AND in the 
+    connectDynamoDB.java file. Then try again.
+2.) Once you have the DynamoDB Local server running, you can run the program from main.java.
