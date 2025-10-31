@@ -14,7 +14,7 @@ public class main {
         Scanner input = new Scanner(System.in);
         connectDynamoDB link = new connectDynamoDB(); // Instantiate class to connect to DynamoDB
 
-        // Run DynamoDB Locally
+        // Connect DynamoDB Local
         DynamoDbClient client = link.connect();
 
         // Create Table
