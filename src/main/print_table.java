@@ -17,6 +17,7 @@ public class print_table {
         // Get Response from the database
         ScanResponse response = client.scan(request);
 
+
         // Print to screen
         for (Map<String, AttributeValue> item : response.items()) { // Loop through response and format output
             for(Map.Entry<String, AttributeValue> entry : item.entrySet()){ // Loop through each "row" of the table

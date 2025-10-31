@@ -1,7 +1,11 @@
 package main;
 
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
+import software.amazon.awssdk.services.dynamodb.model.ScanRequest;
+import software.amazon.awssdk.services.dynamodb.model.ScanResponse;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class main {
@@ -25,9 +29,14 @@ public class main {
             tableName = input.nextLine();
             print_table.printTable(tableName, client);
 
+            System.out.println("After printing the table.");
+
             System.out.println("See another? (y or yes): ");
             flag = input.nextLine().toLowerCase();
         }
+
+        // Terminate DynamoDB connection
+        client.close();
 
         // Close the scanner
         input.close();
