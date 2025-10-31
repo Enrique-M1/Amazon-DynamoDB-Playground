@@ -59,7 +59,7 @@ public class create_table {
             System.out.print("Enter attribute to act as the primary key: (Defines each row. Must be UNIQUE) ");
             String primaryKey = input.nextLine();
 
-            if (!attributeName.contains(primaryKey)) {
+            if (!attributeName.contains(primaryKey)) { // If the primary key is not in the list of attributes, error and return
                 System.out.println("Primary key must be in the list of attributes you provided");
                 input.close();
                 return;
@@ -70,37 +70,46 @@ public class create_table {
                 CreateTableRequest creationRequest = CreateTableRequest.builder()
                         .tableName(tableName)
                         .keySchema(KeySchemaElement.builder()
-                                .attibuteName()
-                        )
+                                .attributeName(primaryKey)
+                                .keyType(KeyType.HASH)
+                                .build())
+                        .attributeDefinitions(AttributeDefinition.builder()
+                                .attributeName(primaryKey)
+                                .attributeType(ScalarAttributeType.S)
+                                .build())
+                        .build();
+                client.createTable(creationRequest);
+                System.out.println("Table created!");
+            } catch (DynamoDbException e) { // If there is an error, show error and return
+                System.err.println(e.getMessage());
+                input.close();
+                return;
             }
 
+            // Update the table
             while (flag.equals("y") || flag.equals("yes")) { // Create each row
+                Map<String, AttributeValue> row = new HashMap<>();
                 for (int count = 0; count < numberOfAttributes; count++) { // Iterate through each column
-                    System.out.print("Enter attribute " + count + " value: ");
-                    table.put(attributeName.get(count), AttributeValue.builder().s(input.nextLine())
-                            .build()
-                    );
+                    System.out.print("Enter attribute " + attributeName.get(count) + " value: ");
+                    row.put(attributeName.get(count), AttributeValue.builder().s(input.nextLine()).build());
                 }
-                System.out.print("Create another row? (y or yes): ");
+
+                // Put item in the table
+                PutItemRequest putRequest = PutItemRequest.builder()
+                                .tableName(tableName).item(row).build();
+
+                try { // Put the item in the table
+                    client.putItem(putRequest);
+                } catch (DynamoDbException e) {
+                    System.err.println(e.getMessage());
+                    return;
+                }
+                System.out.print("Add another? (y or yes): ");
                 flag = input.nextLine().toLowerCase();
             }
 
-            // Get the name of the table, add everything, and send the request to create the table
-            System.out.print("Enter table name: ");
-            PutItemRequest request = PutItemRequest.builder()
-                    .tableName(input.nextLine())
-                    .item(table)
-                    .build();
-
-            client.putItem(request);
-
-            System.out.println("Table created!");
-
             // Close the scanner
             input.close();
-        }
-        else { // Otherwise, terminate
-            return;
         }
     }
 }
