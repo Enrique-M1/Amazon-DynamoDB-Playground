@@ -89,7 +89,7 @@ public class create_table {
             // Update the table
             while (flag.equals("y") || flag.equals("yes")) { // Create each row
                 Map<String, AttributeValue> row = new HashMap<>();
-                for (int count = 0; count < numberOfAttributes; count++) { // Iterate through each column
+                for (int count = 1; count < numberOfAttributes + 1; count++) { // Iterate through each column
                     System.out.print("Enter attribute " + attributeName.get(count) + " value: ");
                     row.put(attributeName.get(count), AttributeValue.builder().s(input.nextLine()).build());
                 }
