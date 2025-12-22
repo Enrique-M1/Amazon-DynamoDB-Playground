@@ -14,31 +14,48 @@ public class main {
         Scanner input = new Scanner(System.in);
         connectDynamoDB link = new connectDynamoDB(); // Instantiate class to connect to DynamoDB
 
+
         // Connect DynamoDB Local
         DynamoDbClient client = link.connect();
 
-        // Create Table
-        create_table.createTable(client);
+        // Determine what the user wants to do
+        System.out.println("What would you like to do?:\n1.)Create a table\n2.)View a table\n3.)Update/Remove a table\n" +
+                "4.)Exit\nChoice(1, 2, 3, or 4 accepted):");
+        int choice = input.nextInt();
 
-        // Show table
-        System.out.println("Show table? (y or yes): ");
-        String flag = input.nextLine().toLowerCase();
+        while (true) {
+            switch (choice) {
+                case 1: // Create a table
+                    create_table.createTable(client);
+                    break;
 
-        while (flag.equals("y") || flag.equals("yes")) {
-            System.out.print("Enter table name: ");
-            tableName = input.nextLine();
-            print_table.printTable(tableName, client);
+                case 2: // View a table
+                    System.out.print("Enter table name: ");
+                    tableName = input.nextLine();
+                    print_table.printTable(tableName, client);
+                    break;
 
-            System.out.println("After printing the table.");
+                case 3: // Update/Remove a table
+                    updateTable.updateTable(client);
+                    break;
 
-            System.out.println("See another? (y or yes): ");
-            flag = input.nextLine().toLowerCase();
+                case 4: // Exit
+                    // Terminate DynamoDB connection
+                    client.close();
+
+                    // Close the scanner
+                    input.close();
+                    return;
+
+                default: // Invalid choice
+                    System.out.println("Invalid choice\nPlease enter 1, 2, 3, or 4");
+                    break;
+            }
+            System.out.println("What would you like to do?:\n1.)Create a table\n2.)View a table\n3.)Update/Remove a table\n" +
+                    "4.)Exit\nChoice(1, 2, 3, or 4 accepted):");
+            choice = input.nextInt();
         }
-
-        // Terminate DynamoDB connection
-        client.close();
-
-        // Close the scanner
-        input.close();
     }
 }
+
+
