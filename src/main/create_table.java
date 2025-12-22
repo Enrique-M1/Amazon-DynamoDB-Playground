@@ -12,10 +12,7 @@ import java.util.Scanner;
 public class create_table {
     public static void createTable(DynamoDbClient client){
         Scanner input = new Scanner(System.in);
-        String flag; // Flag to determine if table should be created
-
-        System.out.println("Create a table? (y or yes): ");
-        flag = input.nextLine().toLowerCase();
+        String flag = "y"; // Flag to determine if table should be created
 
         if (flag.equals("y") || flag.equals("yes")) { // Create a table
             String tableName;
