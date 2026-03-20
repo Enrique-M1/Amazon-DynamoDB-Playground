@@ -11,43 +11,42 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class updateTable {
-    public static void updateTable(DynamoDbClient client, String tableName){
+    public static void updateTable(DynamoDbClient client){
         /* TODO:
             1.) Delete a row in the table
             2.) Delete a column in the table
             3.) Add a column to the table
-            4.) Add a row to the table
+
         */
         Scanner input = new Scanner(System.in);
-        String choice;
 
         // Ask User for what they want to do
         System.out.println("What would you like to do?");
         System.out.println("1.) Add an attribute (column) \n2.) Delete an attribute (column)\n"
-                + "3.) Add a record (row)\n4.) Delete a record (row)\n5.) Exit\nChoice: ");
+                + "3.) Add a record (row)\n4.) Delete a record (row)\n5.)Delete a table\n "
+                + "6.) Exit\nChoice: ");
 
-        choice = input.nextLine();
+        int choice = input.nextInt();
 
         while(true) {
             switch (choice) {
                 // Add an attribute to the table
-                case "1":
+                case 1:
                     System.out.println(choice);
                     return;
 
                 // Delete an attribute from the table
-                case "2":
+                case 2:
                     System.out.println(choice);
                     return;
 
                 // Add a record to the table
-                case "3":
+                case 3:
                     System.out.println("What table would you like to add a record to?");
-                    String updateTable = input.nextLine();
+                    String tableName = input.nextLine();
                     String flag = "y";
 
                     while (true) { // While we are adding records, continue
-
                         if (flag.equalsIgnoreCase("y")|| flag.equalsIgnoreCase("yes")) {
                             // Update the table
                             while (flag.equals("y") || flag.equals("yes")) { // Create each row
@@ -91,18 +90,23 @@ public class updateTable {
                     return;
 
                 // Delete a record from the table
-                case "4":
+                case 4:
                     System.out.println(choice);
                     return;
 
-                // Exit the program
-                case "5":
+                // Delete a table
+                case 5:
                     System.out.println(choice);
+                    break;
+
+                // Exit the program
+                case 6:
+                    System.out.println("Update Complete!");
                     return;
 
                 // Invalid choice entered
                 default:
-                    System.out.println("Invalid choice\nPlease enter 1, 2, 3, 4 or 5");
+                    System.out.println("Invalid choice\nPlease enter 1, 2, 3, 4, 5, or 6");
                     break;
             }
         }
